@@ -1,16 +1,26 @@
-<!-- Amply Motion Code -->
-<script src="https://cdn.jsdelivr.net/gh/joinamply/amply-motion@b1.2.1/dist/index.js"></script>
-<!-- P5 Sound -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/addons/p5.sound.min.js"></script>
+<!-- Amply Motion Code
+<script src="https://cdn.jsdelivr.net/gh/joinamply/amply-motion@b1.2.7/dist/index.js"></script> -->
+<!--<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>-->
+<script src="http://127.0.0.1:5500/dist/index.js"></script>
 
 <!-- Logo Sound -->
  <script>
-    function preload() {
-        soundFormats('mp3', 'ogg');
-        mySound = loadSound('https://assets.website-files.com/60f2e1f3f7b3f3f7f7f3f2e1/60f2e1f3f7b3f3f7f7f3f2e1_logo-sound.mp3');
-        
-    }
+    $('.navbar_sound-button').on('click', function () {
+        $('#logo-sound')[0].currentTime = 0;
+        $('#logo-sound')[0].play();
+    });
  </script>
+
+ <!-- Navbar -->
+<script>
+    ScrollTrigger.create({
+        trigger: ".page-wrapper",
+        start: "top+=50 top",
+        end: "+=0",
+        onEnter: () => $(".navbar_component").addClass("is-scrolling"),
+        onEnterBack: () => $(".navbar_component").removeClass("is-scrolling"),
+    });
+</script>
 
 <!-- Navbar Search -->
 <script>
