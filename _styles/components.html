@@ -1,5 +1,142 @@
+<!-- Buttons -->
+<style>
+    .button.is-icon-xxsmall .icon-embed-xsmall {
+        width: var(--sizes-icon--xx-small);
+        height: var(--sizes-icon--xx-small);
+    }
+</style>
+
+<!-- Navbar -->
 <style>
     .navbar_component.is-scrolling .navbar_bg-color {
         opacity: 1;
+    }
+</style>
+
+<!-- Header BG Images -->
+<style>
+    .headers-bg-img_wrapper[header-bg-img="2"] {
+        margin-right: 0%;
+        margin-left: -32%;
+        transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+    }
+
+    .headers-bg-img_wrapper[header-bg-img="3"] {
+        margin-right: 0%;
+        margin-top: -37%;
+        margin-right: 14%;
+    }
+
+    .headers-bg-img_wrapper[header-bg-img="4"] {
+        margin-right: 0%;
+        margin-top: 27%;
+        margin-right: -20%;
+    }
+</style>
+
+<!-- Features Accordion -->
+<style>
+    .content-accordion-item.is-active .content-accordion-item_progress-fill {
+        opacity: 1;
+    }
+
+    .content-accordion-item.is-active:hover .content-accordion-item_progress-fill {
+        opacity: 0;
+    }
+
+    .content-accordion-item.is-active:hover:has(.content-accordion-item_absolute-link) .content-accordion-item_title-icon {
+        margin-left: 0rem;
+        opacity: 1;
+    }
+</style>
+
+<!-- Section Title -->
+<style>
+    .section-title_component[alignment="left"] {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .section-title_component[alignment="right"] {
+        align-items: flex-end;
+        text-align: right;
+    }
+</style>
+
+<!-- Section Buttons -->
+<style>
+    .section-buttons_component[alignment="left"] {
+        justify-content: flex-start;
+    }
+
+    .section-buttons_component[alignment="right"] {
+        justify-content: flex-end;
+    }
+</style>
+
+<!-- Card - Full Image -->
+<style>
+    .card-full-image_item[aspect-ratio="2"] {
+        aspect-ratio: 530/400;
+    }
+</style>
+
+<!-- Card - Resource -->
+<style>
+    /* Check if text-style-category has text inside and hide if it doesn't  */
+    .text-style-category:empty {
+        display: none;
+    }
+
+    /* Check if child inside card-resource_categories-list are no empty */
+    .card-resource_categories-list:not(:has(> :not([style*="display: none"]):not(:empty))) {
+        display: none;
+    }
+
+    @media screen and (min-width:768px) {
+        .resources-list_wrapper .grid-c4_layout .resources-list_item:first-child {
+            grid-row-start: span 1;
+            grid-row-end: span 1;
+            grid-column-start: span 2;
+            grid-column-end: span 2;
+        }
+    }
+
+    .resources-list_wrapper .grid-c4_layout .resources-list_item:first-child .card-resource_bottom-button-wrapper {
+        display: none;
+    }
+
+    .resources-list_wrapper .grid-c4_layout .resources-list_item:first-child .card-resource_top-button-wrapper {
+        display: flex;
+    }
+</style>
+
+<!-- Section - Big Numbers Sticky -->
+<style>
+    @media screen and (min-width:1441px) {
+        .big-bumbers-sticky_layout {
+            position: static;
+        }
+
+        .big-numbers-sticky_detail-wrapper {
+            right: 0%;
+        }
+    }
+</style>
+
+<!-- Section - Content Layout 1 -->
+<style>
+    .content-1_img[image-overflow="true"] {
+        margin-left: 3rem;
+        margin-top: -8rem;
+        margin-bottom: -8rem;
+    }
+
+    @media screen and (max-width:767px) {
+        .content-1_img[image-overflow="true"] {
+            margin-left: 0rem;
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+        }
     }
 </style>

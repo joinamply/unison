@@ -1,17 +1,19 @@
 <!-- Amply Motion Code
 <script src="https://cdn.jsdelivr.net/gh/joinamply/amply-motion@b1.2.7/dist/index.js"></script> -->
-<!--<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>-->
-<script src="http://127.0.0.1:5500/dist/index.js"></script>
+<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>
+<!--<script src="http://127.0.0.1:5500/dist/index.js"></script>-->
+<!-- Swiper -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
 <!-- Logo Sound -->
- <script>
+<script>
     $('.navbar_sound-button').on('click', function () {
         $('#logo-sound')[0].currentTime = 0;
         $('#logo-sound')[0].play();
     });
- </script>
+</script>
 
- <!-- Navbar -->
+<!-- Navbar -->
 <script>
     ScrollTrigger.create({
         trigger: ".page-wrapper",
@@ -42,93 +44,185 @@
     });
 </script>
 
-<!-- HubSpot API -->
+<!-- Dropdown Tabs -->
 <script>
-    let hsApiUrl = 'https://api.hsforms.com/submissions/v3/integration/submit/PORTAL-ID/';
-    let formData = {
-        fields: [],
-    };
-    let UTMs = ['utm_medium', 'utm_source', 'utm_campaign', 'utm_term', 'utm_content'];
+    $('.dropdown-tabs_component').each(function () {
+        let tabLink = $(this).find('.dropdown-tabs_tab-link');
+        let tabContent = $(this).find('.dropdown-tabs_content');
 
-    $('[hs-form]').on('submit', function (event) {
-        let hsForm = $(this);
-        let hsFormID = $(this).attr('hs-form');
-        if (hsFormID == undefined) return;
-        let hsEndPoint = hsApiUrl + hsFormID;
-        let redirectURL = $(this).attr('redirect-url');
-        // Add the form data to the formData object
-        hsForm.find('[hs-form-field]').each(function () {
-            let field = {
-                name: $(this).attr('hs-form-field'),
-                value: $(this).val(),
-            };
-            formData.fields.push(field);
-        });
-        // Add the UTM parameters to the formData object
-        UTMs.forEach(utm => {
-            let utmValue = new URLSearchParams(window.location.search).get(utm);
-            if (utmValue != null) {
-                let field = {
-                    name: `${utm}`,
-                    value: utmValue,
-                };
-                formData.fields.push(field);
-            }
-        });
-        console.log('HubSpot Form Data:', formData);
-        // Get page information
-        let pageName = document.title; // Use the page title as the name
-        let pageUrl = window.location.href; // Get the full URL of the page
-        // Create the hs_context object
-        formData.context = {
-            hutk: document.cookie.replace(/(?:(?:^|.*;\s*)hubspotutk\s*=\s*([^;]*).*$)|^.*$/, "$1"), // Get the HubSpot User Token from the cookie if available
-            pageUri: pageUrl,
-            pageName: pageName
-        };
-        // Make a POST request to HubSpot
-        fetch(hsEndPoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('HubSpot Form Submission Successful:', data);
-
-                const { redirectUri } = data;
-
-                if (redirectURL != undefined) {
-                    setTimeout(() => {
-                        window.location = redirectURL;
-                    }, 1000);
-                } else if (redirectUri != undefined) {
-                    setTimeout(() => {
-                        window.location = redirectUri;
-                    }, 1000);
-                }
-            })
-            .catch(error => {
-                console.error('HubSpot Form Submission Error:', error);
-                // Handle error, e.g., show an error message to the user
+        tabLink.each(function (index) {
+            $(this).on('click', function () {
+                tabLink.removeClass('is-active');
+                tabLink.eq(index).addClass('is-active');
+                tabContent.removeClass('is-active');
+                tabContent.eq(index).addClass('is-active');
             });
+        });
     });
+</script>
+
+<!-- Big Numbers Sticky -->
+<script>
+        $('.section_big-numbers-sticky').each(function () {
+            let mm = gsap.matchMedia();
+            let triggers = $(this).find('.big-numbers-sticky_trigger');
+            let numbersList = $(this).find('.big-numbers-sticky_numbers-list');
+            const yIncrease = 33.33;
+            let yCurrent = 0;
+            mm.add("(min-width: 768px)", () => {
+                for (let i = 0; i < triggers.length; i++) {
+                    ScrollTrigger.create({
+                        trigger: triggers[i],
+                        start: "top center",
+                        end: "bottom center",
+                        onEnter: () => {
+                            yCurrent += yIncrease;
+                            gsap.to(numbersList, { duration: 0.5, y: `-${yCurrent}%`, ease: "power2.inOut" });
+                        },
+                        onEnterBack: () => {
+                            yCurrent -= yIncrease;
+                            gsap.to(numbersList, { duration: 0.5, y: `-${yCurrent}%`, ease: "power2.inOut" });
+                        },
+                    });
+                }
+            });
+        });
+</script>
+
+<!-- Content Accordion -->
+<style>
+    .content-accordion-item_accordion {
+        height: 0rem;
+    }
+</style>
+
+<script>
+        $(".section_content-accordion").each(function () {
+            let items = $(this).find(".content-accordion-item");
+            let layout = $(this).find(".content-accordion-item_accordion-layout");
+            let currentItem = 0;
+            let progressFill;
+            let timerStarted = false;
+            let matchMedia = gsap.matchMedia();
+            let isMobile = false;
+
+            gsap.set(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto" });
+
+            items.on("mouseenter", function () {
+                pauseTimer();
+                if ($(this).hasClass("is-active")) return;
+                changeActiveItem($(this).index());
+            });
+            items.on("mouseleave", function (index) {
+                startTimer();
+            });
+
+            function changeActiveItem(index) {
+                items.removeClass("is-active");
+                gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "0rem", duration: 0.5, ease: "power2.out" });
+                items.eq(index).addClass("is-active");
+                currentItem = index;
+                gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto", duration: 0.5, ease: "power2.out" });
+            }
+
+            // To prevent the page from jump the timer will just start when the layout scroll into view
+            ScrollTrigger.create({
+                trigger: layout,
+                start: "top center",
+                end: "bottom center",
+                markers: false,
+                onEnter: () => {
+                    startTimer();
+                },
+                onEnterBack: () => {
+                    startTimer();
+                },
+                onLeave: () => {
+                    pauseTimer();
+                },
+                onLeaveBack: () => {
+                    pauseTimer();
+                },
+            });
+
+            // Timer
+            function startTimer() {
+                if (timerStarted || isMobile) return;
+                timerStarted = true;
+                progressFill = items.eq(currentItem).find(".content-accordion-item_progress-fill");
+                gsap.fromTo(progressFill, { width: "0%" }, { width: "100%", duration: 5, ease: "none", onComplete: nextItem });
+            }
+            function nextItem() {
+                let nextItem = currentItem + 1;
+                if (nextItem >= items.length) nextItem = 0;
+                changeActiveItem(nextItem);
+                timerStarted = false;
+                startTimer();
+            }
+            function pauseTimer() {
+                timerStarted = false;
+                gsap.killTweensOf(progressFill);
+            }
+
+            // Media Query
+            matchMedia.add("(min-width: 992px)", () => {
+                isMobile = false;
+                startTimer();
+            });
+
+            matchMedia.add("(max-width: 991px)", () => {
+                isMobile = true;
+                pauseTimer();
+            });
+        });
+</script>
+
+<!-- Swiper Component -->
+<script>
+        $(".swiper_component").each(function () {
+            let effect = $(this).attr("effect") || "slide";
+            let slidesPerView = "auto";
+            let followFinger = $(this).attr("followFinger") || false;
+            let speed = parseInt($(this).attr("speed")) || 500;
+            let autoHeight = $(this).attr("autoHeight") || false;
+            const swiper = new Swiper($(this).find(".swiper")[0], {
+                effect: effect,
+                fadeEffect: {
+                    crossFade: true
+                },
+                slidesPerView: slidesPerView,
+                followFinger: followFinger,
+                speed: speed,
+                autoHeight: autoHeight,
+                pagination: {
+                    el: $(this).find(".swiper_bullets-wrapper")[0],
+                    bulletActiveClass: "is-active",
+                    bulletClass: "swiper_bullet",
+                    bulletElement: "button",
+                    clickable: true
+                },
+                navigation: {
+                    nextEl: $(this).find('[swiper-button="next"]')[0],
+                    prevEl: $(this).find('[swiper-button="prev"]')[0],
+                    disabledClass: "is-disabled"
+                }
+            });
+        });
 </script>
 
 <!-- Code Snippets -->
 <script>
-    // Footer Copyright
-    $('[copyright-year]').text(new Date().getFullYear());
+        // Footer Copyright
+        $('[copyright-year]').text(new Date().getFullYear());
 
-    // Hide section if collection is empty
-    $('.w-dyn-empty').parents('[hide-if-empty]').each(function () { $(this).hide() });
+        // Hide section if collection is empty
+        $('.w-dyn-empty').parents('[hide-if-empty]').each(function () { $(this).hide() });
 
-    // Keep form height on success
-    $(window).bind("load resize submit", function (e) {
-        $('form').each(function () {
-            var formHeight = $(this).height();
-            $(this).siblings('.w-form-done').css({ 'min-height': formHeight });
+        // Keep form height on success
+        $(window).bind("load resize submit", function (e) {
+            $('form').each(function () {
+                var formHeight = $(this).height();
+                $(this).siblings('.w-form-done').css({ 'min-height': formHeight });
+            });
         });
-    });
 </script>

@@ -136,7 +136,7 @@ am-scroll-start="top bottom"
 am-scroll-end="bottom bottom"
 >
 <meta am-element-settings="marquee"
-am-duration="20"
+am-duration="40"
 am-ease="none"
 am-repeat="-1"
 am-direction="left"
@@ -167,13 +167,81 @@ am-display="flex"
 am-tween="to"
 >
 
-<!-- Header Waves -->
-<meta am-element-settings="header-wave-01"
-am-set-rotation-z="-10"
-am-duration="25"
+<!-- Sound Playing -->
+<meta am-group-settings="sound-playing"
+am-trigger="click-restart"
+am-repeat="1"
+>
+<meta am-element-settings="sound-playing"
+am-timeline-position=">"
+am-duration="0.3"
+am-opacity="0"
 am-tween="to"
-am-rotation-z="10"
+>
+
+<!-- Waves -->
+<meta am-group-settings="wave"
+am-scroll-start="top bottom"
+am-scroll-end="bottom bottom"
+>
+<meta am-element-settings="wave"
+am-duration="20"
+am-tween="to"
 am-repeat="-1"
 am-yoyo="true"
 am-ease="sine.inOut"
+>
+<meta am-element-settings="wave-1"
+am-duration="20"
+am-tween="to"
+am-repeat="-1"
+am-yoyo="true"
+am-ease="sine.inOut"
+am-set-rotation-z="-5"
+am-set-position-y="1rem"
+am-rotation-z="5"
+am-position-y="-1rem"
+>
+<meta am-element-settings="wave-2"
+am-duration="20"
+am-tween="to"
+am-repeat="-1"
+am-yoyo="true"
+am-ease="sine.inOut"
+am-set-rotation-z="10"
+am-set-position-x="1rem"
+am-rotation-z="-10"
+am-position-x="-1rem"
+>
+<meta am-element-settings="wave-3"
+am-duration="20"
+am-tween="to"
+am-repeat="-1"
+am-yoyo="true"
+am-ease="sine.inOut"
+am-set-rotation-z="-10"
+am-set-position-y="1rem"
+am-rotation-z="5"
+am-position-y="-1rem"
+>
+<meta am-element-settings="wave-4"
+am-duration="20"
+am-tween="to"
+am-repeat="-1"
+am-yoyo="true"
+am-ease="sine.inOut"
+am-set-rotation-z="-10"
+am-rotation-z="10"
+>
+
+<!-- Scrub Text -->
+<meta am-group-settings="scrub-text"
+am-scroll-start="top center"
+am-scroll-end="bottom center"
+am-scrub="1"
+>
+<meta am-element-settings="scrub-text"
+am-opacity=".2"
+am-split-into="letters"
+am-stagger-amount="2"
 >
