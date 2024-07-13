@@ -1,0 +1,50 @@
+<script>
+    const modalComponent = $(".team-modal_component");
+    const modalBackground = $(".team-modal_background");
+    const modalLayout = $(".team-modal_layout");
+
+    let bios = $(".team-bios-list_item");
+
+    // Make sure modal is hidden when page is loaded
+    modalComponent.css("display", "none");
+
+    // Modal Timeline
+    let modalTl = new gsap.timeline({ paused: true });
+    modalTl.to(modalComponent, { display: "flex" });
+    modalTl.fromTo(modalBackground, { opacity: 0 }, { opacity: 1, duration: 0.3 }, "<");
+    modalTl.fromTo(modalLayout, { opacity: 0, y: "4rem" }, { opacity: 1, y: "0rem", duration: 0.3 }, "<+=0.15");
+
+    // If scape key is pressed and modal is open close it
+    $(document).on("keydown", function (e) {
+        if (e.key === "Escape" && modalComponent.is(":visible")){
+            closeModal();
+        }
+    });
+
+    $('[team-modal="close"]').on("click", function () {
+        closeModal();
+    });
+
+    $(".team-modal_background").on("click", function () {
+        closeModal();
+    });
+
+    $(".card-team_item").each(function (index) {
+        let button = $(this).find(".button");
+        button.on("click", function () {
+            openModal(index);
+        });
+    });
+
+    function openModal(index) {
+        // Hide all bios
+        bios.css("display", "none");
+        // Show just the one we want
+        bios.eq(index).css("display", "block");
+        modalTl.play();
+    }
+
+    function closeModal() {
+        modalTl.reverse();
+    }
+</script>

@@ -74,10 +74,21 @@
     }
 </style>
 
+<!-- Cards -->
+<style>
+    [card-padding="small"] {
+        padding: 1.25rem;
+    }
+</style>
+
 <!-- Card - Full Image -->
 <style>
     .card-full-image_item[aspect-ratio="2"] {
         aspect-ratio: 530/400;
+    }
+
+    .card-full-image_item[aspect-ratio="3"] {
+        aspect-ratio: 470/280;
     }
 </style>
 
@@ -93,20 +104,11 @@
         display: none;
     }
 
-    @media screen and (min-width:768px) {
-        .resources-list_wrapper .grid-c4_layout .resources-list_item:first-child {
-            grid-row-start: span 1;
-            grid-row-end: span 1;
-            grid-column-start: span 2;
-            grid-column-end: span 2;
-        }
-    }
-
-    .resources-list_wrapper .grid-c4_layout .resources-list_item:first-child .card-resource_bottom-button-wrapper {
+    .latest-resources-list_wrapper.is-highlight .card-resource_bottom-button-wrapper {
         display: none;
     }
 
-    .resources-list_wrapper .grid-c4_layout .resources-list_item:first-child .card-resource_top-button-wrapper {
+    .latest-resources-list_wrapper.is-highlight .card-resource_top-button-wrapper {
         display: flex;
     }
 </style>
@@ -127,6 +129,7 @@
 <!-- Section - Content Layout 1 -->
 <style>
     .content-1_img[image-overflow="true"] {
+        width: auto;
         margin-left: 3rem;
         margin-top: -8rem;
         margin-bottom: -8rem;
@@ -134,9 +137,29 @@
 
     @media screen and (max-width:767px) {
         .content-1_img[image-overflow="true"] {
-            margin-left: 0rem;
+            margin-left: -1.25rem;
+            margin-right: -1.25rem;
             margin-top: 0rem;
             margin-bottom: 0rem;
         }
     }
 </style>
+
+<!-- Logo Marquee -->
+<style>
+    .section_logos-marquee[background='white'] {
+        background-color: var(--colors-neutrals--white);
+    }
+
+    .section_logos-marquee[background='light-grey'] {
+        background-color: var(--colors-neutrals--light-grey);
+    }
+</style>
+
+<!-- Big Number Item -->
+ <style>
+    .big-number_item[alignment="center"] {
+        align-items: center;
+        text-align: center;
+    }
+ </style>

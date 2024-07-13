@@ -14,6 +14,11 @@
 </script>
 
 <!-- Navbar -->
+<style>
+    .navbar_bg-color {
+        opacity: 0;
+    }
+</style>
 <script>
     ScrollTrigger.create({
         trigger: ".page-wrapper",
@@ -63,30 +68,30 @@
 
 <!-- Big Numbers Sticky -->
 <script>
-        $('.section_big-numbers-sticky').each(function () {
-            let mm = gsap.matchMedia();
-            let triggers = $(this).find('.big-numbers-sticky_trigger');
-            let numbersList = $(this).find('.big-numbers-sticky_numbers-list');
-            const yIncrease = 33.33;
-            let yCurrent = 0;
-            mm.add("(min-width: 768px)", () => {
-                for (let i = 0; i < triggers.length; i++) {
-                    ScrollTrigger.create({
-                        trigger: triggers[i],
-                        start: "top center",
-                        end: "bottom center",
-                        onEnter: () => {
-                            yCurrent += yIncrease;
-                            gsap.to(numbersList, { duration: 0.5, y: `-${yCurrent}%`, ease: "power2.inOut" });
-                        },
-                        onEnterBack: () => {
-                            yCurrent -= yIncrease;
-                            gsap.to(numbersList, { duration: 0.5, y: `-${yCurrent}%`, ease: "power2.inOut" });
-                        },
-                    });
-                }
-            });
+    $('.section_big-numbers-sticky').each(function () {
+        let mm = gsap.matchMedia();
+        let triggers = $(this).find('.big-numbers-sticky_trigger');
+        let numbersList = $(this).find('.big-numbers-sticky_numbers-list');
+        const yIncrease = 100 / (triggers.length + 1);
+        let yCurrent = 0;
+        mm.add("(min-width: 768px)", () => {
+            for (let i = 0; i < triggers.length; i++) {
+                ScrollTrigger.create({
+                    trigger: triggers[i],
+                    start: "top center",
+                    end: "bottom center",
+                    onEnter: () => {
+                        yCurrent += yIncrease;
+                        gsap.to(numbersList, { duration: 0.5, y: `-${yCurrent}%`, ease: "power2.inOut" });
+                    },
+                    onEnterBack: () => {
+                        yCurrent -= yIncrease;
+                        gsap.to(numbersList, { duration: 0.5, y: `-${yCurrent}%`, ease: "power2.inOut" });
+                    },
+                });
+            }
         });
+    });
 </script>
 
 <!-- Content Accordion -->
@@ -97,132 +102,135 @@
 </style>
 
 <script>
-        $(".section_content-accordion").each(function () {
-            let items = $(this).find(".content-accordion-item");
-            let layout = $(this).find(".content-accordion-item_accordion-layout");
-            let currentItem = 0;
-            let progressFill;
-            let timerStarted = false;
-            let matchMedia = gsap.matchMedia();
-            let isMobile = false;
+    $(".section_content-accordion").each(function () {
+        let items = $(this).find(".content-accordion-item");
+        let layout = $(this).find(".content-accordion-item_accordion-layout");
+        let currentItem = 0;
+        let progressFill;
+        let timerStarted = false;
+        let matchMedia = gsap.matchMedia();
+        let isMobile = false;
+        // If not first remove the active class
+        items.removeClass("is-active");
+        items.eq(currentItem).addClass("is-active");
 
-            gsap.set(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto" });
+        gsap.set(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto" });
 
-            items.on("mouseenter", function () {
-                pauseTimer();
-                if ($(this).hasClass("is-active")) return;
-                changeActiveItem($(this).index());
-            });
-            items.on("mouseleave", function (index) {
-                startTimer();
-            });
-
-            function changeActiveItem(index) {
-                items.removeClass("is-active");
-                gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "0rem", duration: 0.5, ease: "power2.out" });
-                items.eq(index).addClass("is-active");
-                currentItem = index;
-                gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto", duration: 0.5, ease: "power2.out" });
-            }
-
-            // To prevent the page from jump the timer will just start when the layout scroll into view
-            ScrollTrigger.create({
-                trigger: layout,
-                start: "top center",
-                end: "bottom center",
-                markers: false,
-                onEnter: () => {
-                    startTimer();
-                },
-                onEnterBack: () => {
-                    startTimer();
-                },
-                onLeave: () => {
-                    pauseTimer();
-                },
-                onLeaveBack: () => {
-                    pauseTimer();
-                },
-            });
-
-            // Timer
-            function startTimer() {
-                if (timerStarted || isMobile) return;
-                timerStarted = true;
-                progressFill = items.eq(currentItem).find(".content-accordion-item_progress-fill");
-                gsap.fromTo(progressFill, { width: "0%" }, { width: "100%", duration: 5, ease: "none", onComplete: nextItem });
-            }
-            function nextItem() {
-                let nextItem = currentItem + 1;
-                if (nextItem >= items.length) nextItem = 0;
-                changeActiveItem(nextItem);
-                timerStarted = false;
-                startTimer();
-            }
-            function pauseTimer() {
-                timerStarted = false;
-                gsap.killTweensOf(progressFill);
-            }
-
-            // Media Query
-            matchMedia.add("(min-width: 992px)", () => {
-                isMobile = false;
-                startTimer();
-            });
-
-            matchMedia.add("(max-width: 991px)", () => {
-                isMobile = true;
-                pauseTimer();
-            });
+        items.on("mouseenter", function () {
+            pauseTimer();
+            if ($(this).hasClass("is-active")) return;
+            changeActiveItem($(this).index());
         });
+        items.on("mouseleave", function (index) {
+            startTimer();
+        });
+
+        function changeActiveItem(index) {
+            items.removeClass("is-active");
+            gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "0rem", duration: 0.5, ease: "power2.out" });
+            items.eq(index).addClass("is-active");
+            currentItem = index;
+            gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto", duration: 0.5, ease: "power2.out" });
+        }
+
+        // To prevent the page from jump the timer will just start when the section scrolls into view
+        ScrollTrigger.create({
+            trigger: $(this),
+            start: "top bottom",
+            end: "bottom center",
+            markers: false,
+            onEnter: () => {
+                startTimer();
+            },
+            onEnterBack: () => {
+                startTimer();
+            },
+            onLeave: () => {
+                pauseTimer();
+            },
+            onLeaveBack: () => {
+                pauseTimer();
+            },
+        });
+
+        // Timer
+        function startTimer() {
+            if (timerStarted || isMobile) return;
+            timerStarted = true;
+            progressFill = items.eq(currentItem).find(".content-accordion-item_progress-fill");
+            gsap.fromTo(progressFill, { width: "0%" }, { width: "100%", duration: 5, ease: "none", onComplete: nextItem });
+        }
+        function nextItem() {
+            let nextItem = currentItem + 1;
+            if (nextItem >= items.length) nextItem = 0;
+            changeActiveItem(nextItem);
+            timerStarted = false;
+            startTimer();
+        }
+        function pauseTimer() {
+            timerStarted = false;
+            gsap.killTweensOf(progressFill);
+        }
+
+        // Media Query
+        matchMedia.add("(min-width: 992px)", () => {
+            isMobile = false;
+            startTimer();
+        });
+
+        matchMedia.add("(max-width: 991px)", () => {
+            isMobile = true;
+            pauseTimer();
+        });
+    });
 </script>
 
 <!-- Swiper Component -->
 <script>
-        $(".swiper_component").each(function () {
-            let effect = $(this).attr("effect") || "slide";
-            let slidesPerView = "auto";
-            let followFinger = $(this).attr("followFinger") || false;
-            let speed = parseInt($(this).attr("speed")) || 500;
-            let autoHeight = $(this).attr("autoHeight") || false;
-            const swiper = new Swiper($(this).find(".swiper")[0], {
-                effect: effect,
-                fadeEffect: {
-                    crossFade: true
-                },
-                slidesPerView: slidesPerView,
-                followFinger: followFinger,
-                speed: speed,
-                autoHeight: autoHeight,
-                pagination: {
-                    el: $(this).find(".swiper_bullets-wrapper")[0],
-                    bulletActiveClass: "is-active",
-                    bulletClass: "swiper_bullet",
-                    bulletElement: "button",
-                    clickable: true
-                },
-                navigation: {
-                    nextEl: $(this).find('[swiper-button="next"]')[0],
-                    prevEl: $(this).find('[swiper-button="prev"]')[0],
-                    disabledClass: "is-disabled"
-                }
-            });
+    $(".swiper_component").each(function () {
+        let effect = $(this).attr("effect") || "slide";
+        let slidesPerView = "auto";
+        let followFinger = $(this).attr("followFinger") || false;
+        let speed = parseInt($(this).attr("speed")) || 500;
+        let autoHeight = $(this).attr("autoHeight") || false;
+        const swiper = new Swiper($(this).find(".swiper")[0], {
+            effect: effect,
+            fadeEffect: {
+                crossFade: true
+            },
+            slidesPerView: slidesPerView,
+            followFinger: followFinger,
+            speed: speed,
+            autoHeight: autoHeight,
+            pagination: {
+                el: $(this).find(".swiper_bullets-wrapper")[0],
+                bulletActiveClass: "is-active",
+                bulletClass: "swiper_bullet",
+                bulletElement: "button",
+                clickable: true
+            },
+            navigation: {
+                nextEl: $(this).find('[swiper-button="next"]')[0],
+                prevEl: $(this).find('[swiper-button="prev"]')[0],
+                disabledClass: "is-disabled"
+            }
         });
+    });
 </script>
 
 <!-- Code Snippets -->
 <script>
-        // Footer Copyright
-        $('[copyright-year]').text(new Date().getFullYear());
+    // Footer Copyright
+    $('[copyright-year]').text(new Date().getFullYear());
 
-        // Hide section if collection is empty
-        $('.w-dyn-empty').parents('[hide-if-empty]').each(function () { $(this).hide() });
+    // Hide section if collection is empty
+    $('.w-dyn-empty').parents('[hide-if-empty]').each(function () { $(this).hide() });
 
-        // Keep form height on success
-        $(window).bind("load resize submit", function (e) {
-            $('form').each(function () {
-                var formHeight = $(this).height();
-                $(this).siblings('.w-form-done').css({ 'min-height': formHeight });
-            });
+    // Keep form height on success
+    $(window).bind("load resize submit", function (e) {
+        $('form').each(function () {
+            var formHeight = $(this).height();
+            $(this).siblings('.w-form-done').css({ 'min-height': formHeight });
         });
+    });
 </script>
