@@ -1,7 +1,6 @@
 <!-- Amply Motion Code
-<script src="https://cdn.jsdelivr.net/gh/joinamply/amply-motion@b1.2.7/dist/index.js"></script> -->
-<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>
-<!--<script src="http://127.0.0.1:5500/dist/index.js"></script>-->
+<script src="https://cdn.jsdelivr.net/gh/joinamply/amply-motion@b1.2.7/dist/index.js"></script> 
+<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>-->
 <!-- Swiper -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
@@ -163,7 +162,7 @@
             if (timerStarted || isMobile) return;
             timerStarted = true;
             progressFill = items.eq(currentItem).find(".content-accordion-item_progress-fill");
-            gsap.fromTo(progressFill, { width: "0%" }, { width: "100%", duration: 10, ease: "none", onComplete: nextItem });
+            gsap.fromTo(progressFill, { width: "0%" }, { width: "100%", duration: 20, ease: "none", onComplete: nextItem });
         }
         function nextItem() {
             let nextItem = currentItem + 1;

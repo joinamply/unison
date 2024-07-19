@@ -140,7 +140,7 @@ am-scroll-start="top bottom"
 am-scroll-end="bottom bottom"
 >
 <meta am-element-settings="marquee"
-am-duration="40"
+am-duration="80"
 am-ease="none"
 am-repeat="-1"
 am-direction="left"
@@ -248,4 +248,25 @@ am-scrub="1"
 am-opacity=".2"
 am-split-into="letters"
 am-stagger-amount="2"
+>
+
+<!-- Scroll and Fade In -->
+<meta am-group-settings="scroll-fade-in"
+am-scroll-start="top 80%"
+am-scroll-end="bottom 20%"
+>
+<meta am-element-settings="scroll-in"
+am-tween="from"
+am-duration="1"
+am-ease="power2.out"
+am-timeline-position=">-0.6"
+am-opacity="0"
+am-position-y="4rem"
+>
+<meta am-element-settings="fade-in"
+am-duration=".8"
+am-ease="power2.out"
+am-timeline-position=">-0.6"
+am-tween="from"
+am-opacity="0"
 >

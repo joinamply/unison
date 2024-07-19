@@ -104,7 +104,12 @@
 
 <!-- Heading Details -->
 <style>
-    h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+    :not(.text-rich-text) > h1 strong, 
+    :not(.text-rich-text) > h2 strong, 
+    :not(.text-rich-text) > h3 strong, 
+    :not(.text-rich-text) > h4 strong, 
+    :not(.text-rich-text) > h5 strong, 
+    :not(.text-rich-text) > h6 strong {
         display: inline-block;
         position: relative;
         font-weight: inherit;
@@ -112,7 +117,12 @@
         text-wrap: nowrap;
     }
 
-    h1 strong::before, h2 strong::before, h3 strong::before, h4 strong::before, h5 strong::before, h6 strong::before {
+    :not(.text-rich-text) > h1 strong::before, 
+    :not(.text-rich-text) > h2 strong::before, 
+    :not(.text-rich-text) > h3 strong::before, 
+    :not(.text-rich-text) > h4 strong::before, 
+    :not(.text-rich-text) > h5 strong::before, 
+    :not(.text-rich-text) > h6 strong::before {
         content: "";
         position: absolute;
         top: 0%;
