@@ -1,6 +1,5 @@
-<!-- Amply Motion Code
-<script src="https://cdn.jsdelivr.net/gh/joinamply/amply-motion@b1.2.7/dist/index.js"></script> 
-<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>-->
+<!-- Amply Motion Code -->
+<script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>
 <!-- Swiper -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
@@ -206,6 +205,7 @@
             followFinger: followFinger,
             speed: speed,
             autoHeight: autoHeight,
+            a11y: true,
             pagination: {
                 el: $(this).find(".swiper_bullets-wrapper")[0],
                 bulletActiveClass: "is-active",
@@ -220,6 +220,9 @@
             }
         });
     });
+
+    // Change all slides roles to prevent an accessibility issue
+    $(".swiper-slide").attr("role", "listitem");
 </script>
 
 <!-- Code Snippets -->
