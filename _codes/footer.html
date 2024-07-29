@@ -1,5 +1,6 @@
 <!-- Amply Motion Code -->
 <script src="https://joinamply.github.io/amply-motion/dist/index.js"></script>
+
 <!-- Swiper -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
@@ -111,8 +112,8 @@
         // If not first remove the active class
         items.removeClass("is-active");
         items.eq(currentItem).addClass("is-active");
-
         gsap.set(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto" });
+        gsap.set(items.eq(currentItem).find(".content-accordion-item_icon-wrapper"), { rotationZ: "45" });
 
         items.on("click", function () {
             if ($(this).hasClass("is-active")) return;
@@ -131,9 +132,11 @@
         function changeActiveItem(index) {
             items.removeClass("is-active");
             gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "0rem", duration: 0.5, ease: "power2.out" });
+            gsap.to(items.eq(currentItem).find(".content-accordion-item_icon-wrapper"), { rotationZ: "0", duration: 0.5, ease: "power2.out" });
             items.eq(index).addClass("is-active");
             currentItem = index;
             gsap.to(items.eq(currentItem).find(".content-accordion-item_accordion"), { height: "auto", duration: 0.5, ease: "power2.out" });
+            gsap.to(items.eq(currentItem).find(".content-accordion-item_icon-wrapper"), { rotationZ: "45", duration: 0.5, ease: "power2.out" });
         }
 
         // To prevent the page from jump the timer will just start when the section scrolls into view
