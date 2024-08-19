@@ -104,12 +104,38 @@
 
 <!-- Heading Details -->
 <style>
-    :not(.text-rich-text) > h1 strong, 
-    :not(.text-rich-text) > h2 strong, 
-    :not(.text-rich-text) > h3 strong, 
-    :not(.text-rich-text) > h4 strong, 
-    :not(.text-rich-text) > h5 strong, 
-    :not(.text-rich-text) > h6 strong {
+    .text-rich-text h1 strong,
+    .text-rich-text h2 strong,
+    .text-rich-text h3 strong,
+    .text-rich-text h4 strong,
+    .text-rich-text h5 strong,
+    .text-rich-text h6 strong {
+        /* Reset the styles for elements inside .text-rich-text */
+        display: block !important;
+        /* Or whatever the default display should be */
+        position: static !important;
+        font-weight: inherit !important;
+        /* Or whatever the default font-weight should be */
+        background-image: none !important;
+    }
+
+    .text-rich-text h1 strong::before,
+    .text-rich-text h2 strong::before,
+    .text-rich-text h3 strong::before,
+    .text-rich-text h4 strong::before,
+    .text-rich-text h5 strong::before,
+    .text-rich-text h6 strong::before {
+        /* Remove the pseudo-element */
+        content: none !important;
+    }
+
+    :not(.text-rich-text)>h1 strong,
+    :not(.text-rich-text)>h2 strong,
+    :not(.text-rich-text)>h3 strong,
+    :not(.text-rich-text)>h4 strong,
+    :not(.text-rich-text)>h5 strong,
+    :not(.text-rich-text)>h6 strong {
+        /* Keep your original styles for elements outside .text-rich-text, but use the child combinator (>) */
         display: inline-block;
         position: relative;
         font-weight: inherit;
@@ -117,12 +143,13 @@
         text-wrap: nowrap;
     }
 
-    :not(.text-rich-text) > h1 strong::before, 
-    :not(.text-rich-text) > h2 strong::before, 
-    :not(.text-rich-text) > h3 strong::before, 
-    :not(.text-rich-text) > h4 strong::before, 
-    :not(.text-rich-text) > h5 strong::before, 
-    :not(.text-rich-text) > h6 strong::before {
+    :not(.text-rich-text)>h1 strong::before,
+    :not(.text-rich-text)>h2 strong::before,
+    :not(.text-rich-text)>h3 strong::before,
+    :not(.text-rich-text)>h4 strong::before,
+    :not(.text-rich-text)>h5 strong::before,
+    :not(.text-rich-text)>h6 strong::before {
+        /* Keep your original pseudo-element styles for elements outside .text-rich-text */
         content: "";
         position: absolute;
         top: 0%;
